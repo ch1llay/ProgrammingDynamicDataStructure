@@ -6,6 +6,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("ProgrammingDynamicDataStructure")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (lab1 "lab1/main.cpp" "lab1/lab1.cpp" "lab1/lab1.h")
+add_executable (lab1 "lab1/main.cpp" "lab2/lab2.cpp" "lab1/lab1.h" )
+add_executable (lab2 "lab2/lab2.cpp" "lab2/lab2.h" "lab2/main.cpp" )
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
