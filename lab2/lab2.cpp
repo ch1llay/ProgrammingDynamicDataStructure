@@ -106,7 +106,7 @@ bool isSubSet(Node* subset, Node* set)
 	if (getLength(subset) > getLength(set)) {
 		return false;
 	}
-	for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX);ptr = ptr->next) {
+	for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX);ptrSubset = ptrSubset->next) {
 		if (!isExist(set, subset->value)) {
 			return false;
 		}
@@ -118,7 +118,7 @@ bool isSubSet(Node* subset, Node* set)
 bool equils(Node* set1, Node* set2)
 {
 	if (isSubSet(set1, set2) && isSubSet(set2, set1)) {
-		return true''
+		return true;
 	}
 	else {
 		return false;
@@ -154,7 +154,9 @@ Node* intersection(Node* set1, Node* set2)
 	}
 	else {
 		Node* newSet = createEmptySet();
-		for (Node* ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX);ptr = ptr->next) {
+		Node* ptr1;
+		Node* ptr2;
+		for (ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX));ptr1 = ptr1->next, ptr2 = ptr2->next) {
 			if (isExist(ptr2, ptr1->value)) {
 				newSet = add(newSet, ptr1->value);
 			}
@@ -176,7 +178,9 @@ Node* difference(Node* set1, Node* set2)
 	}
 	else {
 		Node* newSet = createEmptySet();
-		for (Node* ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX);ptr = ptr->next) {
+		Node* ptr1;
+		Node* ptr2;
+		for (ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX));ptr1 = ptr1->next, ptr2 = ptr2->next) {
 			if (!isExist(ptr1, ptr2->value)) {
 				newSet = add(newSet, ptr1->value);
 			}
@@ -189,7 +193,7 @@ Node* symmetricDifference(Node* set1, Node* set2)
 {
 	Node* combiningSet = combining(set1, set2);
 	Node* intersectionSet = intersection(set1, set2);
-	Node* newNode = difference(combining, intersectionSet);
+	Node* newNode = difference(combining(set1, set2), intersectionSet);
 	return newNode;
 }
 
