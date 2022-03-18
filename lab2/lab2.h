@@ -20,7 +20,7 @@ Node* clear(Node* start);
 bool isSubSet(Node* subset, Node* set);
 bool equils(Node* set1, Node* set2);
 Node* combining(Node* set1, Node* set2);
-Node* interseñection(Node* set1, Node* set2);
+Node* intersection(Node* set1, Node* set2);
 Node* difference(Node* set1, Node* set2);
 Node* symmetricDifference(Node* set1, Node* set2);
 

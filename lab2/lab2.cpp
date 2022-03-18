@@ -72,7 +72,7 @@ std::string toString(Node* start, char separate)
 		s += std::to_string(ptr->value);
 		if (ptr->next->value != INT_MAX) {
 			s += separate;
-			
+
 		}
 	}
 	return s;
@@ -83,53 +83,113 @@ Node* clear(Node* start)
 	if (isEmpty(start)) {
 		return start;
 	}
-	Node* last_node = nullptr;
-	Node* last_last_node = nullptr;
-
-	for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX);ptr = ptr->next) {
-		if (last_node) {
-			if (last_last_node) {
-				delete last_node;
-			}
-			else {
-				last_node->next = nullptr;
-				last_node->value = INT_MAX;
-			}
-
+	Node* temp;
+	for (Node* ptr = start->next; ((ptr) && (ptr)->value != INT_MAX);) {
+		if (start->next) {
+			temp = ptr;
+			ptr = ptr->next;
+			temp->next = nullptr;
+			temp->value = INT_MAX;
+			delete temp;
 		}
-		last_last_node = last_node;
-		last_node = ptr;
 	}
+	start->next = nullptr;
+	start->value = INT_MAX;
 	return start;
 }
 
 bool isSubSet(Node* subset, Node* set)
 {
-	return false;
+	if (isEmpty(subset)) {
+		return true;
+	}
+	if (getLength(subset) > getLength(set)) {
+		return false;
+	}
+	for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX);ptr = ptr->next) {
+		if (!isExist(set, subset->value)) {
+			return false;
+		}
+	}
+	return true;
+
 }
 
 bool equils(Node* set1, Node* set2)
 {
-	return false;
+	if (isSubSet(set1, set2) && isSubSet(set2, set1)) {
+		return true''
+	}
+	else {
+		return false;
+	}
 }
 
 Node* combining(Node* set1, Node* set2)
 {
-	return nullptr;
+	Node* gettedSet;
+	Node* givenSet;
+	if (isEmpty(set1) && isEmpty(set2)) {
+		return set1;
+	}
+	if (isEmpty(set1)) {
+		gettedSet = set1;
+		givenSet = set2;
+	}
+	else if (isEmpty(set2)) {
+		gettedSet = set2;
+		givenSet = set1;
+	}
+	for (Node* ptr = givenSet; ((ptr) && (ptr)->value != INT_MAX);ptr = ptr->next) {
+		add(gettedSet, ptr->value);
+	}
+	return gettedSet;
+
 }
 
-Node* interseñection(Node* set1, Node* set2)
+Node* intersection(Node* set1, Node* set2)
 {
-	return nullptr;
+	if (isEmpty(set1) || isEmpty(set2)) {
+		return set1;
+	}
+	else {
+		Node* newSet = createEmptySet();
+		for (Node* ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX);ptr = ptr->next) {
+			if (isExist(ptr2, ptr1->value)) {
+				newSet = add(newSet, ptr1->value);
+			}
+			if (isExist(ptr1, ptr2->value)) {
+				newSet = add(newSet, ptr2->value);
+			}
+		}
+		return newSet;
+	}
 }
 
 Node* difference(Node* set1, Node* set2)
 {
-	return nullptr;
+	if (isEmpty(set1)) {
+		return set1;
+	}
+	else if (isEmpty(set2)) {
+		return set1;
+	}
+	else {
+		Node* newSet = createEmptySet();
+		for (Node* ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX);ptr = ptr->next) {
+			if (!isExist(ptr1, ptr2->value)) {
+				newSet = add(newSet, ptr1->value);
+			}
+		}
+		return newSet;
+	};
 }
 
 Node* symmetricDifference(Node* set1, Node* set2)
 {
-	return nullptr;
+	Node* combiningSet = combining(set1, set2);
+	Node* intersectionSet = intersection(set1, set2);
+	Node* newNode = difference(combining, intersectionSet);
+	return newNode;
 }
 

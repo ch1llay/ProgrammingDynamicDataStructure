@@ -72,7 +72,7 @@ std::string toString(Node* start, char separate)
 		s += std::to_string(ptr->value);
 		if (ptr->next->value != INT_MAX) {
 			s += separate;
-			
+
 		}
 	}
 	return s;
@@ -83,23 +83,18 @@ Node* clear(Node* start)
 	if (isEmpty(start)) {
 		return start;
 	}
-	Node* last_node = nullptr;
-	Node* last_last_node = nullptr;
-
-	for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX);ptr = ptr->next) {
-		if (last_node) {
-			if (last_last_node) {
-				delete last_node;
-			}
-			else {
-				last_node->next = nullptr;
-				last_node->value = INT_MAX;
-			}
-
+	Node* temp;
+	for (Node* ptr = start->next; ((ptr) && (ptr)->value != INT_MAX);) {
+		if (start->next) {
+			temp = ptr;
+			ptr = ptr->next;
+			temp->next = nullptr;
+			temp->value = INT_MAX;
+			delete temp;
 		}
-		last_last_node = last_node;
-		last_node = ptr;
 	}
+	start->next = nullptr;
+	start->value = INT_MAX;
 	return start;
 }
 
