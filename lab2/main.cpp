@@ -25,7 +25,7 @@ int main() {
     print("A intersection B - ", intersection(A, B));
     print("A difference B - ", difference(A, B));
     print("B difference A - ", difference(B, A));
-    print("A symmetric B - ", difference(A, B));
+    print("A symmetric B - ", symmetricDifference(A, B));
     
 
     std::cout << std::endl;

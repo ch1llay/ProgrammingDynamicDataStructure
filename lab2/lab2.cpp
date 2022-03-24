@@ -181,8 +181,8 @@ Node* difference(Node* set1, Node* set2)
 	}
 	else {
 		Node* newSet = createEmptySet();
-		for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
-			if (!isExist(set1, ptr->value)) {
+		for (Node* ptr = set1; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+			if (!isExist(set2, ptr->value)) {
 				newSet = add(newSet, ptr->value);
 			}
 		}
@@ -194,7 +194,7 @@ Node* symmetricDifference(Node* set1, Node* set2)
 {
 	Node* combiningSet = combining(set1, set2);
 	Node* intersectionSet = intersection(set1, set2);
-	Node* newNode = difference(combining(set1, set2), intersectionSet);
+	Node* newNode = difference(combiningSet, intersectionSet);
 	return newNode;
 }
 
