@@ -42,11 +42,15 @@ Node* createSet(int amount, int min, int max, int div)
 {
 	Node* start = createEmptySet();
 	int elem;
-	for (int i = 0; i <= amount;) {
+	Node* oldStart = start;
+	for (int i = 0; i < amount;) {
 		elem = min + rand() % (max - min);
 		if (elem % div == 0) {
 			start = add(start, elem);
-			i++;
+			if (oldStart != start) {
+				i++;
+			}
+			oldStart = start;
 		}
 	}
 	return start;
@@ -68,7 +72,7 @@ int getLength(Node* start)
 std::string toString(Node* start, char separate)
 {
 	std::string s = "";
-	for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX);ptr = ptr->next) {
+	for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 		s += std::to_string(ptr->value);
 		if (ptr->next->value != INT_MAX) {
 			s += separate;
@@ -106,7 +110,7 @@ bool isSubSet(Node* subset, Node* set)
 	if (getLength(subset) > getLength(set)) {
 		return false;
 	}
-	for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX);ptrSubset = ptrSubset->next) {
+	for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX); ptrSubset = ptrSubset->next) {
 		if (!isExist(set, subset->value)) {
 			return false;
 		}
@@ -117,51 +121,49 @@ bool isSubSet(Node* subset, Node* set)
 
 bool equils(Node* set1, Node* set2)
 {
-	if (isSubSet(set1, set2) && isSubSet(set2, set1)) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return isSubSet(set1, set2) && isSubSet(set2, set1);
 }
 
 Node* combining(Node* set1, Node* set2)
 {
-	Node* gettedSet;
-	Node* givenSet;
+	Node* newSet = createEmptySet();
+
 	if (isEmpty(set1) && isEmpty(set2)) {
-		return set1;
+		return newSet;
 	}
 	if (isEmpty(set1)) {
-		gettedSet = set1;
-		givenSet = set2;
+		return copy(set2);
 	}
 	else if (isEmpty(set2)) {
-		gettedSet = set2;
-		givenSet = set1;
+		return copy(set1);
 	}
-	for (Node* ptr = givenSet; ((ptr) && (ptr)->value != INT_MAX);ptr = ptr->next) {
-		add(gettedSet, ptr->value);
+	for (Node* ptr = set1; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+		newSet = add(newSet, ptr->value);
 	}
-	return gettedSet;
+	for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+		newSet = add(newSet, ptr->value);
+	}
+	return newSet;
 
 }
-
+Node* copy(Node* set) {
+	Node* newSet = createEmptySet();
+	for (Node* ptr = set; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+		newSet = add(newSet, ptr->value);
+	}
+	return newSet;
+}
 Node* intersection(Node* set1, Node* set2)
 {
+	Node* newSet = createEmptySet();
+
 	if (isEmpty(set1) || isEmpty(set2)) {
-		return set1;
+		return newSet;
 	}
 	else {
-		Node* newSet = createEmptySet();
-		Node* ptr1;
-		Node* ptr2;
-		for (ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX));ptr1 = ptr1->next, ptr2 = ptr2->next) {
-			if (isExist(ptr2, ptr1->value)) {
-				newSet = add(newSet, ptr1->value);
-			}
-			if (isExist(ptr1, ptr2->value)) {
-				newSet = add(newSet, ptr2->value);
+		for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+			if (isExist(set1, ptr->value)) {
+				newSet = add(newSet, ptr->value);
 			}
 		}
 		return newSet;
@@ -170,19 +172,18 @@ Node* intersection(Node* set1, Node* set2)
 
 Node* difference(Node* set1, Node* set2)
 {
+	Node* newSet = createEmptySet();
 	if (isEmpty(set1)) {
-		return set1;
+		return newSet;
 	}
 	else if (isEmpty(set2)) {
-		return set1;
+		return newSet;
 	}
 	else {
 		Node* newSet = createEmptySet();
-		Node* ptr1;
-		Node* ptr2;
-		for (ptr1 = set1, ptr2 = set2; ((ptr1) && (ptr1)->value != INT_MAX && ((ptr2) && (ptr2)->value != INT_MAX));ptr1 = ptr1->next, ptr2 = ptr2->next) {
-			if (!isExist(ptr1, ptr2->value)) {
-				newSet = add(newSet, ptr1->value);
+		for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
+			if (!isExist(set1, ptr->value)) {
+				newSet = add(newSet, ptr->value);
 			}
 		}
 		return newSet;

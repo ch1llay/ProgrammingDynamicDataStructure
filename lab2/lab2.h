@@ -17,6 +17,7 @@ int getLength(Node* start);
 std::string toString(Node* start, char separate);
 Node* clear(Node* start);
 
+Node* copy(Node* set);
 bool isSubSet(Node* subset, Node* set);
 bool equils(Node* set1, Node* set2);
 Node* combining(Node* set1, Node* set2);
