@@ -20,14 +20,14 @@ public:
 	int getLength();
 	std::string toString(char separate);
 	
-	bool isSubSet(Set set);
-	bool equils(Set set);
-	Set combining(Set set);
-	Set intersection(Set set);
-	Set difference(Set set);
-	Set symmetricDifference(Set set);
+	bool isSubSet(Set& set);
+	bool equils(Set& set);
+	Set& combining(Set& set);
+	Set& intersection(Set& set);
+	Set& difference(Set& set);
+	Set& symmetricDifference(Set& set);
 private:
-	Set copy();
+	Set& copy();
 };
 
 

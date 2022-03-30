@@ -12,18 +12,22 @@ void print(std::string string1, std::string string2) {
 }
 int main() {
 
-    srand(time(nullptr));
-    Set A = Set(randomInt(6, 9), 0, 100, 6);
-    Set B = Set(randomInt(6, 9), 0, 100, 3);
+    // srand(time(nullptr));
+    Set A = *new Set(randomInt(6, 9), 0, 100, 6);
+    Set B = *new Set(randomInt(6, 9), 0, 100, 3);
 
     print("A: ", A);
-    print("B: ", B);
+    print("B: ", B); 
+    print("A is subset of B - ", A.isSubSet(B) ? "True" : "False");
+    print("A is subset of A - ", A.isSubSet(A) ? "True" : "False");
     print("A is subset of B - ", A.isSubSet(B) ? "True" : "False");
     print("A is subset of A - ", A.isSubSet(A) ? "True" : "False");
     print("A is equil B - ", A.equils(B) ? "True" : "False");
     print("A is equil A - ", A.equils(A) ? "True" : "False");
-    print("A combinining B - ", A.combining(B));
-    print("A intersection B - ", A.intersection(B));
+    Set comb = A.combining(B);
+    print("A combinining B - ", comb);
+    Set intersec = A.intersection(B);
+    print("A intersection B - ", intersec);
     print("A difference B - ", A.difference(B));
     print("B difference A - ", B.difference(A));
     print("A symmetric B - ", A.symmetricDifference(B));

@@ -15,8 +15,8 @@ bool Set::isEmpty()
 bool Set::isExist(int value)
 {
 	if (!isEmpty()) {
-		for (Node* ptr = start; ptr != nullptr; ptr = ptr->next) {
-			if (value == start->value) {
+		for (Node* ptr = start->next; ptr; ptr = ptr->next) {
+			if (value == ptr->value) {
 				return true;
 			}
 		}
@@ -26,8 +26,8 @@ bool Set::isExist(int value)
 void Set::add(int value)
 {
 	if (!isExist(value)) {
+		start->value = value;
 		Node* newStart = new Node;
-		newStart->value = value;
 		newStart->next = start;
 		start = newStart;
 	}
@@ -37,7 +37,8 @@ void Set::add(int value)
 
 Set::Set(int amount, int min, int max, int div)
 {
-	Set();
+	start = new Node();
+	start->next = nullptr;
 	int elem;
 	Node* oldStart = start;
 	for (int i = 0; i < amount;) {
@@ -59,7 +60,7 @@ int Set::getLength()
 		return 0;
 	}
 	int size = 0;
-	for (Node* ptr = start; ptr; ptr = ptr->next) {
+	for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 		size++;
 	}
 	return size;
@@ -69,7 +70,7 @@ int Set::getLength()
 std::string Set::toString(char separate)
 {
 	std::string s = "";
-	for (Node* ptr = start; ptr;) {
+	for (Node* ptr = start->next; ptr;) {
 		s += std::to_string(ptr->value);
 		if (ptr->next) {
 			s += separate;
@@ -99,7 +100,7 @@ Set::~Set()
 	return;
 }
 
-bool Set::isSubSet(Set set)
+bool Set::isSubSet(Set& set)
 {
 	if (isEmpty()) {
 		return true;
@@ -116,15 +117,14 @@ bool Set::isSubSet(Set set)
 
 }
 
-bool Set::equils(Set set)
+bool Set::equils(Set& set)
 {
 	return isSubSet(set) && set.isSubSet(*this);
 }
 
-Set Set::combining(Set set)
+Set& Set::combining(Set& set)
 {
-	start;
-	Set newSet = Set();
+	Set& newSet = *new Set();
 
 	if (isEmpty() && set.isEmpty()) {
 		return newSet;
@@ -135,33 +135,33 @@ Set Set::combining(Set set)
 	else if (set.isEmpty()) {
 		return copy();
 	}
-	for (Node* ptr = start; ptr; ptr = ptr->next) {
+	for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 		newSet.add(ptr->value);
 	}
-	for (Node* ptr = set.start; ptr; ptr = ptr->next) {
+	for (Node* ptr = set.start->next; ptr; ptr = ptr->next) {
 		newSet.add(ptr->value);
 	}
 	return newSet;
 
 }
 
-Set Set::copy() {
-	Set newSet = Set();
-	for (Node* ptr = start; ptr; ptr = ptr->next) {
+Set& Set::copy() {
+	Set& newSet = Set();
+	for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 		newSet.add(ptr->value);
 	}
 	return newSet;
 }
 
-Set Set::intersection(Set set)
+Set& Set::intersection(Set& set)
 {
-	Set newSet = Set();
+	Set& newSet = *new Set();
 
 	if (isEmpty() || set.isEmpty()) {
 		return newSet;
 	}
 	else {
-		for (Node* ptr = set.start;ptr; ptr = ptr->next) {
+		for (Node* ptr = set.start->next;ptr; ptr = ptr->next) {
 			if (isExist(ptr->value)) {
 				newSet.add(ptr->value);
 			}
@@ -170,9 +170,9 @@ Set Set::intersection(Set set)
 	}
 }
 
-Set Set::difference(Set set)
+Set& Set::difference(Set& set)
 {
-	Set newSet = Set();
+	Set& newSet = *new Set();
 	if (isEmpty()) {
 		return newSet;
 	}
@@ -180,7 +180,7 @@ Set Set::difference(Set set)
 		return newSet;
 	}
 	else {
-		for (Node* ptr = start; ptr; ptr = ptr->next) {
+		for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 			if (!set.isExist(ptr->value)) {
 				newSet.add(ptr->value);
 			}
@@ -189,10 +189,10 @@ Set Set::difference(Set set)
 	};
 }
 
-Set Set::symmetricDifference(Set set)
+Set& Set::symmetricDifference(Set& set)
 {
 	Set combiningSet = combining(set);
 	Set intersectionSet = intersection(set);
-	Set newNode = combiningSet.difference(intersectionSet);
+	Set& newNode = combiningSet.difference(intersectionSet);
 	return newNode;
 }
