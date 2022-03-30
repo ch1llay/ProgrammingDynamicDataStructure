@@ -12,6 +12,7 @@ void print(std::string string1, std::string string2) {
 }
 int main() {
 
+    srand(time(nullptr));
     Node* A = createSet(randomInt(6, 9), 0, 100, 6);
     Node* B = createSet(randomInt(6, 9), 0, 100, 3);
 
