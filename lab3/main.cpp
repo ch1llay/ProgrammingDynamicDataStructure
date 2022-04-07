@@ -13,8 +13,8 @@ void print(std::string string1, std::string string2) {
 int main() {
 
     // srand(time(nullptr));
-    Set A = *new Set(randomInt(6, 9), 0, 100, 6);
-    Set B = *new Set(randomInt(6, 9), 0, 100, 3);
+    Set A(randomInt(6, 9), 0, 100, 6);
+    Set B(randomInt(6, 9), 0, 100, 3);
 
     print("A: ", A);
     print("B: ", B); 

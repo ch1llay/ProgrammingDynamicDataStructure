@@ -6,6 +6,12 @@ Set::Set()
 	start->next = nullptr;
 }
 
+Set::Set(Set&& set)
+{
+	start = set.start;
+	set.start = nullptr;
+}
+
 
 bool Set::isEmpty()
 {
@@ -122,9 +128,9 @@ bool Set::equils(Set& set)
 	return isSubSet(set) && set.isSubSet(*this);
 }
 
-Set& Set::combining(Set& set)
+Set Set::combining(Set& set)
 {
-	Set& newSet = *new Set();
+	Set newSet;
 
 	if (isEmpty() && set.isEmpty()) {
 		return newSet;
@@ -145,17 +151,17 @@ Set& Set::combining(Set& set)
 
 }
 
-Set& Set::copy() {
-	Set& newSet = Set();
+Set Set::copy() {
+	Set newSet;
 	for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 		newSet.add(ptr->value);
 	}
 	return newSet;
 }
 
-Set& Set::intersection(Set& set)
+Set Set::intersection(Set& set)
 {
-	Set& newSet = *new Set();
+	Set newSet;
 
 	if (isEmpty() || set.isEmpty()) {
 		return newSet;
@@ -170,9 +176,9 @@ Set& Set::intersection(Set& set)
 	}
 }
 
-Set& Set::difference(Set& set)
+Set Set::difference(Set& set)
 {
-	Set& newSet = *new Set();
+	Set newSet;
 	if (isEmpty()) {
 		return newSet;
 	}
@@ -189,10 +195,10 @@ Set& Set::difference(Set& set)
 	};
 }
 
-Set& Set::symmetricDifference(Set& set)
+Set Set::symmetricDifference(Set& set)
 {
 	Set combiningSet = combining(set);
 	Set intersectionSet = intersection(set);
-	Set& newNode = combiningSet.difference(intersectionSet);
+	Set newNode = combiningSet.difference(intersectionSet);
 	return newNode;
 }

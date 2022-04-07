@@ -12,6 +12,7 @@ class Set {
 	Node* start = nullptr;
 public:
 	Set();
+	Set(Set&& set);
 	Set(int amount, int min, int max, int div);
 	~Set();
 	bool isEmpty();
@@ -22,12 +23,12 @@ public:
 	
 	bool isSubSet(Set& set);
 	bool equils(Set& set);
-	Set& combining(Set& set);
-	Set& intersection(Set& set);
-	Set& difference(Set& set);
-	Set& symmetricDifference(Set& set);
+	Set combining(Set& set);
+	Set intersection(Set& set);
+	Set difference(Set& set);
+	Set symmetricDifference(Set& set);
 private:
-	Set& copy();
+	Set copy();
 };
 
 
