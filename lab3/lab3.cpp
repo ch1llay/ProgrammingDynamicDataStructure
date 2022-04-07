@@ -114,7 +114,7 @@ bool Set::isSubSet(Set& set)
 	if (getLength() > set.getLength()) {
 		return false;
 	}
-	for (Node* ptr = start; ptr; ptr = ptr->next) {
+	for (Node* ptr = start->next; ptr; ptr = ptr->next) {
 		if (!set.isExist(ptr->value)) {
 			return false;
 		}
@@ -201,4 +201,26 @@ Set Set::symmetricDifference(Set& set)
 	Set intersectionSet = intersection(set);
 	Set newNode = combiningSet.difference(intersectionSet);
 	return newNode;
+}
+
+void Set::clear()
+{
+	if (isEmpty()) {
+		return;
+	}
+	Node* temp;
+	for (Node* ptr = start->next; ((ptr) && (ptr)->value != INT_MAX);) {
+		if (ptr->next) {
+			temp = ptr;
+			ptr = ptr->next;
+			temp->next = nullptr;
+			temp->value = INT_MAX;
+			delete temp;
+		}
+		else {
+			break;
+		}
+	}
+	start->next = nullptr;
+	start->value = INT_MAX;
 }

@@ -27,6 +27,7 @@ public:
 	Set intersection(Set& set);
 	Set difference(Set& set);
 	Set symmetricDifference(Set& set);
+	void clear();
 private:
 	Set copy();
 };
