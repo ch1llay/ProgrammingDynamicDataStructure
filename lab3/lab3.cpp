@@ -94,11 +94,14 @@ Set::~Set()
 	}
 	Node* temp;
 	for (Node* ptr = start->next; ptr;) {
-		if (start->next) {
+		if (ptr->next) {
 			temp = ptr;
 			ptr = ptr->next;
 			temp->next = nullptr;
 			delete temp;
+		}
+		else {
+			break;
 		}
 	}
 	start->next = nullptr;
