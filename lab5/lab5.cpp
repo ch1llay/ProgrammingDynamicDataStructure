@@ -1,59 +1,45 @@
-#include "Lab4.h"
+#include "Lab5.h"
 
 Set::Set() {
 
-	lst;
+	container;
 }
 Set::Set(Set&& set) {
-	lst = set.lst;
+	container = set.container;
 }
 Set::Set(int amount, int min, int max, int div) {
 	int elem;
-	for (int i = 0; i < amount;) {
+	while (container.size() < amount) {
 		elem = min + rand() % (max - min);
 		if (elem % div == 0) {
 			add(elem);
-			i++;
+
 		}
 	}
 
 }
 
 Set::~Set() {
-	lst.clear();
+	container.clear();
 }
 
 bool Set::isEmpty() {
-	return lst.empty();
+	return container.empty();
 }
 bool Set::isExist(int value) {
-	if (!isEmpty()) {
-		for (int n : lst) {
-			if (n == value) {
-				return true;
-			}
-		}
-	}
-	return false;
+	return container.count(value) != 0;
 }
 void Set::add(int value) {
-	if (!isExist(value)) {
-		lst.push_front(value);
-	}
+	container.insert(value);
 }
 int Set::getLength() {
-	if (isEmpty()) {
-		return 0;
-	}
-	return lst.size();
+	return container.size();
 }
 std::string Set::toString(char separate) {
 	std::string s;
-	if (!isEmpty()) {
-		int last = lst.back();
-		for (int n : lst) {
-			s += (n != last) ? std::to_string(n) + separate : std::to_string(n);
-		}
+	// int last = *container.rbegin();
+	for (int n : container) {
+		s += /*(n != last) ?*/ std::to_string(n) + separate /*: n*/;
 	}
 	return s;
 }
@@ -65,7 +51,7 @@ bool Set::isSubSet(Set& set) {
 	if (getLength() > set.getLength()) {
 		return false;
 	}
-	for (int n : lst) {
+	for (int n : container) {
 		if (!set.isExist(n)) {
 			return false;
 		}
@@ -74,7 +60,7 @@ bool Set::isSubSet(Set& set) {
 }
 Set Set::copy() {
 	Set newSet;
-	newSet.lst = lst;
+	newSet.container = container;
 	return newSet;
 }
 bool Set::equils(Set& set) {
@@ -86,16 +72,10 @@ Set Set::combining(Set& set) {
 	if (isEmpty() && set.isEmpty()) {
 		return newSet;
 	}
-	if (isEmpty()) {
-		return set.copy();
-	}
-	else if (set.isEmpty()) {
-		return copy();
-	}
-	for (int n : lst) {
+	for (int n : container) {
 		newSet.add(n);
 	}
-	for (int n : set.lst) {
+	for (int n : set.container) {
 		newSet.add(n);
 	}
 	return newSet;
@@ -108,31 +88,21 @@ Set Set::intersection(Set& set) {
 	if (isEmpty() || set.isEmpty()) {
 		return newSet;
 	}
-	else {
-		for (int n : set.lst) {
-			if (isExist(n)) {
-				newSet.add(n);
-			}
+	for (int n : set.container) {
+		if (isExist(n)) {
+			newSet.add(n);
 		}
-		return newSet;
 	}
+	return newSet;
 }
 Set Set::difference(Set& set) {
 	Set newSet;
-	if (isEmpty()) {
-		return newSet;
-	}
-	else if (set.isEmpty()) {
-		return newSet;
-	}
-	else {
-		for (int n : lst) {
-			if (!set.isExist(n)) {
-				newSet.add(n);
-			}
+	for (int n : container) {
+		if (!set.isExist(n)) {
+			newSet.add(n);
 		}
-		return newSet;
-	};
+	}
+	return newSet;
 }
 Set Set::symmetricDifference(Set& set) {
 	Set combiningSet = combining(set);
@@ -141,5 +111,5 @@ Set Set::symmetricDifference(Set& set) {
 	return newNode;
 }
 void Set::clear() {
-	lst.clear();
+	container.clear();
 }
