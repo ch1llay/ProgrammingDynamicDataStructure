@@ -5,7 +5,7 @@
 #include <set>
 
 class Set {
-	std::set<int> container;
+	std::set<int> containerSet;
 public:
 	Set();
 	Set(Set&& set);

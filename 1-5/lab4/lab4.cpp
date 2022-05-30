@@ -2,7 +2,7 @@
 
 Set::Set() {
 
-	lst;
+	
 }
 Set::Set(Set&& set) {
 	lst = set.lst;
@@ -42,16 +42,13 @@ void Set::add(int value) {
 	}
 }
 int Set::getLength() {
-	if (isEmpty()) {
-		return 0;
-	}
 	return lst.size();
 }
 std::string Set::toString(char separate) {
-	std::string s;
+	std::string s = "";
 	if (!isEmpty()) {
 		int last = lst.back();
-		for (int n : lst) {
+		for (auto n : lst) {
 			s += (n != last) ? std::to_string(n) + separate : std::to_string(n);
 		}
 	}

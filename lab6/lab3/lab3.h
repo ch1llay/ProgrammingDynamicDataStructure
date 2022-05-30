@@ -3,7 +3,6 @@
 #include <random>
 #include <iostream>
 
-
 namespace lab3 {
 	struct Node {
 		int value = INT_MAX;
@@ -15,7 +14,7 @@ namespace lab3 {
 	public:
 		Set();
 		Set(Set&& set);
-		Set(int amount, int min, int max, int div);
+		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();
 		bool isExist(int value);
@@ -34,6 +33,7 @@ namespace lab3 {
 		Set copy();
 	};
 }
+
 
 
 

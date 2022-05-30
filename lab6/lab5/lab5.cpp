@@ -1,5 +1,4 @@
-#include "Lab5.h"
-
+#include "lab5.h"
 
 namespace lab5 {
 	Set::Set() {
@@ -9,14 +8,11 @@ namespace lab5 {
 	Set::Set(Set&& set) {
 		container = set.container;
 	}
-	Set::Set(int amount, int min, int max, int div) {
+	Set::Set(int amount, int min, int max) {
 		int elem;
 		while (container.size() < amount) {
 			elem = min + rand() % (max - min);
-			if (elem % div == 0) {
-				add(elem);
-
-			}
+			add(elem);
 		}
 
 	}

@@ -1,5 +1,4 @@
-#include "Lab4.h"
-
+#include "lab4.h"
 
 namespace lab4 {
 	Set::Set() {
@@ -9,14 +8,11 @@ namespace lab4 {
 	Set::Set(Set&& set) {
 		lst = set.lst;
 	}
-	Set::Set(int amount, int min, int max, int div) {
+	Set::Set(int amount, int min, int max) {
 		int elem;
-		for (int i = 0; i < amount;) {
+		for (int i = 0; i < amount;i++) {
 			elem = min + rand() % (max - min);
-			if (elem % div == 0) {
-				add(elem);
-				i++;
-			}
+			add(elem);
 		}
 
 	}

@@ -1,5 +1,4 @@
-#include "Lab3.h"
-
+#include "lab3.h"
 
 namespace lab3 {
 	Set::Set()
@@ -43,7 +42,7 @@ namespace lab3 {
 
 
 
-	Set::Set(int amount, int min, int max, int div)
+	Set::Set(int amount, int min, int max)
 	{
 		start = new Node();
 		start->next = nullptr;
@@ -51,13 +50,11 @@ namespace lab3 {
 		Node* oldStart = start;
 		for (int i = 0; i < amount;) {
 			elem = min + rand() % (max - min);
-			if (elem % div == 0) {
-				add(elem);
-				if (oldStart != start) {
-					i++;
-				}
-				oldStart = start;
+			add(elem);
+			if (oldStart != start) {
+				i++;
 			}
+			oldStart = start;
 
 		}
 	}

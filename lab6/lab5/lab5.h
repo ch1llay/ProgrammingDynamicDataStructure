@@ -4,14 +4,13 @@
 #include <iostream>
 #include <set>
 
-
 namespace lab5 {
 	class Set {
 		std::set<int> container;
 	public:
 		Set();
 		Set(Set&& set);
-		Set(int amount, int min, int max, int div);
+		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();
 		bool isExist(int value);

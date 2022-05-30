@@ -4,14 +4,13 @@
 #include <iostream>
 #include <list>
 
-
 namespace lab4 {
 	class Set {
 		std::list<int> lst;
 	public:
 		Set();
 		Set(Set&& set);
-		Set(int amount, int min, int max, int div);
+		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();
 		bool isExist(int value);
@@ -30,6 +29,7 @@ namespace lab4 {
 		Set copy();
 	};
 }
+
 
 
 
