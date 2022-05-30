@@ -2,18 +2,15 @@
 #include <string>
 #include <random>
 #include <iostream>
+#include <set>
 
-namespace lab3 {
-	struct Node {
-		int value = INT_MAX;
-		Node* next = nullptr;
-	};
-
+namespace lab5 {
 	class Set {
-		Node* start = nullptr;
+		std::set<int> containerSet;
 	public:
 		Set();
 		Set(Set&& set);
+		Set(int amount, int min, int max, int div);
 		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();

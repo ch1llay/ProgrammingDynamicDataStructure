@@ -13,6 +13,7 @@ namespace lab2 {
 	bool isEmpty(Node* start);
 	bool isExist(Node* start, int value);
 	Node* add(Node* start, int value);
+	Node* createSet(int amount, int min, int max, int div);
 	Node* createSet(int amount, int min, int max);
 	int getLength(Node* start);
 	std::string toString(Node* start, char separate);

@@ -1,22 +1,23 @@
-#include "lab2.h"
+#include "Lab2.h"
 
 namespace lab2 {
 	Node* createEmptySet(void)
 	{
 		Node* start = new Node;
 		start->next = nullptr;
+		start->value = INT_MAX;
 		return start;
 	}
 
 	bool isEmpty(Node* start)
 	{
-		return ((start == nullptr));
+		return ((start == nullptr) || (start->value == INT_MAX));
 	}
 
 	bool isExist(Node* start, int value)
 	{
 		if (!isEmpty(start)) {
-			for (Node* ptr = start; (ptr); ptr = ptr->next) {
+			for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 				if (value == ptr->value) {
 					return true;
 				}
@@ -33,9 +34,28 @@ namespace lab2 {
 			newStart->next = start;
 			return newStart;
 		}
-		return start;
+		else {
+			return start;
+		}
 	}
 
+	Node* createSet(int amount, int min, int max, int div)
+	{
+		Node* start = createEmptySet();
+		int elem;
+		Node* oldStart = start;
+		for (int i = 0; i < amount;) {
+			elem = min + rand() % (max - min);
+			if (elem % div == 0) {
+				start = add(start, elem);
+				if (oldStart != start) {
+					i++;
+				}
+				oldStart = start;
+			}
+		}
+		return start;
+	}
 	Node* createSet(int amount, int min, int max)
 	{
 		Node* start = createEmptySet();
@@ -58,7 +78,7 @@ namespace lab2 {
 			return 0;
 		}
 		int size = 0;
-		for (Node* ptr = start; (ptr); ptr = ptr->next) {
+		for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 			size++;
 		}
 		return size;
@@ -68,9 +88,9 @@ namespace lab2 {
 	std::string toString(Node* start, char separate)
 	{
 		std::string s = "";
-		for (Node* ptr = start; ((ptr) ); ptr = ptr->next) {
+		for (Node* ptr = start; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 			s += std::to_string(ptr->value);
-			if (ptr->next) {
+			if (ptr->next->value != INT_MAX) {
 				s += separate;
 
 			}
@@ -84,15 +104,17 @@ namespace lab2 {
 			return start;
 		}
 		Node* temp;
-		for (Node* ptr = start->next; (ptr);) {
+		for (Node* ptr = start->next; ((ptr) && (ptr)->value != INT_MAX);) {
 			if (start->next) {
 				temp = ptr;
 				ptr = ptr->next;
 				temp->next = nullptr;
+				temp->value = INT_MAX;
 				delete temp;
 			}
 		}
 		start->next = nullptr;
+		start->value = INT_MAX;
 		return start;
 	}
 
@@ -104,7 +126,7 @@ namespace lab2 {
 		if (getLength(subset) > getLength(set)) {
 			return false;
 		}
-		for (Node* ptrSubset = subset; (ptrSubset); ptrSubset = ptrSubset->next) {
+		for (Node* ptrSubset = subset; ((ptrSubset) && (ptrSubset)->value != INT_MAX); ptrSubset = ptrSubset->next) {
 			if (!isExist(set, subset->value)) {
 				return false;
 			}
@@ -131,10 +153,10 @@ namespace lab2 {
 		else if (isEmpty(set2)) {
 			return copy(set1);
 		}
-		for (Node* ptr = set1; ((ptr)); ptr = ptr->next) {
+		for (Node* ptr = set1; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 			newSet = add(newSet, ptr->value);
 		}
-		for (Node* ptr = set2; ((ptr)); ptr = ptr->next) {
+		for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 			newSet = add(newSet, ptr->value);
 		}
 		return newSet;
@@ -142,7 +164,7 @@ namespace lab2 {
 	}
 	Node* copy(Node* set) {
 		Node* newSet = createEmptySet();
-		for (Node* ptr = set; ((ptr)); ptr = ptr->next) {
+		for (Node* ptr = set; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 			newSet = add(newSet, ptr->value);
 		}
 		return newSet;
@@ -155,7 +177,7 @@ namespace lab2 {
 			return newSet;
 		}
 		else {
-			for (Node* ptr = set2; (ptr); ptr = ptr->next) {
+			for (Node* ptr = set2; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 				if (isExist(set1, ptr->value)) {
 					newSet = add(newSet, ptr->value);
 				}
@@ -175,7 +197,7 @@ namespace lab2 {
 		}
 		else {
 			Node* newSet = createEmptySet();
-			for (Node* ptr = set1; (ptr); ptr = ptr->next) {
+			for (Node* ptr = set1; ((ptr) && (ptr)->value != INT_MAX); ptr = ptr->next) {
 				if (!isExist(set2, ptr->value)) {
 					newSet = add(newSet, ptr->value);
 				}

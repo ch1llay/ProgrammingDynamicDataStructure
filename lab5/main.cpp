@@ -1,5 +1,6 @@
 #include "Lab5.h"
 
+using namespace lab5;
 int randomInt(int min, int max) {
 	return min + rand() % (max - min);
 }

@@ -1,5 +1,6 @@
 #include "Lab3.h"
 
+using namespace lab3;
 int randomInt(int min, int max) {
     return min + rand() % (max - min);
 }

@@ -2,14 +2,15 @@
 #include <string>
 #include <random>
 #include <iostream>
-#include <set>
+#include <list>
 
-namespace lab5 {
+namespace lab4 {
 	class Set {
-		std::set<int> container;
+		std::list<int> lst;
 	public:
 		Set();
 		Set(Set&& set);
+		Set(int amount, int min, int max, int div);
 		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();

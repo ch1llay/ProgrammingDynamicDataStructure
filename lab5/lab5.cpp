@@ -1,16 +1,27 @@
-#include "lab4.h"
+#include "Lab5.h"
 
-namespace lab4 {
+namespace lab5 {
 	Set::Set() {
 
-		lst;
+
 	}
 	Set::Set(Set&& set) {
-		lst = set.lst;
+		containerSet = set.containerSet;
+	}
+	Set::Set(int amount, int min, int max, int div) {
+		int elem;
+		for (int i = 0; i < amount;) {
+			elem = min + rand() % (max - min);
+			if (elem % div == 0) {
+				add(elem);
+				i++;
+			}
+		}
+
 	}
 	Set::Set(int amount, int min, int max) {
 		int elem;
-		for (int i = 0; i < amount;i++) {
+		while (containerSet.size() < amount) {
 			elem = min + rand() % (max - min);
 			add(elem);
 		}
@@ -18,15 +29,15 @@ namespace lab4 {
 	}
 
 	Set::~Set() {
-		lst.clear();
+		containerSet.clear();
 	}
 
 	bool Set::isEmpty() {
-		return lst.empty();
+		return containerSet.empty();
 	}
 	bool Set::isExist(int value) {
 		if (!isEmpty()) {
-			for (int n : lst) {
+			for (int n : containerSet) {
 				if (n == value) {
 					return true;
 				}
@@ -36,21 +47,17 @@ namespace lab4 {
 	}
 	void Set::add(int value) {
 		if (!isExist(value)) {
-			lst.push_front(value);
+			containerSet.insert(value);
 		}
 	}
 	int Set::getLength() {
-		if (isEmpty()) {
-			return 0;
-		}
-		return lst.size();
+		return containerSet.size();
 	}
 	std::string Set::toString(char separate) {
-		std::string s;
+		std::string s = "";
 		if (!isEmpty()) {
-			int last = lst.back();
-			for (int n : lst) {
-				s += (n != last) ? std::to_string(n) + separate : std::to_string(n);
+			for (auto n : containerSet) {
+				s += std::to_string(n) + separate;
 			}
 		}
 		return s;
@@ -63,7 +70,7 @@ namespace lab4 {
 		if (getLength() > set.getLength()) {
 			return false;
 		}
-		for (int n : lst) {
+		for (int n : containerSet) {
 			if (!set.isExist(n)) {
 				return false;
 			}
@@ -72,7 +79,7 @@ namespace lab4 {
 	}
 	Set Set::copy() {
 		Set newSet;
-		newSet.lst = lst;
+		newSet.containerSet = containerSet;
 		return newSet;
 	}
 	bool Set::equils(Set& set) {
@@ -90,10 +97,10 @@ namespace lab4 {
 		else if (set.isEmpty()) {
 			return copy();
 		}
-		for (int n : lst) {
+		for (int n : containerSet) {
 			newSet.add(n);
 		}
-		for (int n : set.lst) {
+		for (int n : set.containerSet) {
 			newSet.add(n);
 		}
 		return newSet;
@@ -107,7 +114,7 @@ namespace lab4 {
 			return newSet;
 		}
 		else {
-			for (int n : set.lst) {
+			for (int n : set.containerSet) {
 				if (isExist(n)) {
 					newSet.add(n);
 				}
@@ -124,7 +131,7 @@ namespace lab4 {
 			return newSet;
 		}
 		else {
-			for (int n : lst) {
+			for (int n : containerSet) {
 				if (!set.isExist(n)) {
 					newSet.add(n);
 				}
@@ -139,6 +146,6 @@ namespace lab4 {
 		return newNode;
 	}
 	void Set::clear() {
-		lst.clear();
+		containerSet.clear();
 	}
 }

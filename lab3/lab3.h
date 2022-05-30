@@ -2,14 +2,19 @@
 #include <string>
 #include <random>
 #include <iostream>
-#include <list>
 
-namespace lab4 {
+namespace lab3 {
+	struct Node {
+		int value = INT_MAX;
+		Node* next = nullptr;
+	};
+
 	class Set {
-		std::list<int> lst;
+		Node* start = nullptr;
 	public:
 		Set();
 		Set(Set&& set);
+		Set(int amount, int min, int max, int div);
 		Set(int amount, int min, int max);
 		~Set();
 		bool isEmpty();
