@@ -5,7 +5,7 @@
 #include "lab6.h"
 
 int main() {
-	Benchmarck benchmarck;
+	Benchmarck benchmarck(10);
 	benchmarck.RunSetOnPointers();
 	std::cout << benchmarck.SetOnPointers->combining_time;
 
