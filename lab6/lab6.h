@@ -3,10 +3,10 @@
 #include <random>
 #include <iostream>
 
-#include "lab2/lab2.h"
-#include "lab3/lab3.h"	
-#include "lab4/lab4.h"	
-#include "lab5/lab5.h"	
+#include "../lab2/lab2.h"
+#include "../lab3/lab3.h"	
+#include "../lab4/lab4.h"	
+#include "../lab5/lab5.h"	
 
 
 
@@ -52,7 +52,7 @@ public:
 		BENCHMARK(SetOnPointers.symmetric_difference_time, lab2::symmetricDifference(A, B));
 	}
 	void RunSetOnClass() {
-		BENCHMARK(SetOnPointers.create_time, lab3::Set A(N, 0, N));
+		BENCHMARK(SetOnClass.create_time, lab3::Set A(N, 0, N));
 		lab3::Set B(N, 0, N);
 		BENCHMARK(SetOnClass.power_time, A.getLength());
 		BENCHMARK(SetOnClass.subsetAA_time, A.isSubSet(A));
