@@ -25,20 +25,6 @@
 
 
 
-struct StatsContainer {
-	int create_time;
-	int power_time;
-	int subsetAA_time;
-	int subsetBA_time;
-	int equilAA;
-	int equilBA;
-	int combining_time;
-	int intersection_time;
-	int difference_time;
-	int symmetric_difference_time;
-
-
-};
 enum Stats {
 	create_time,
 	power_time,
@@ -64,7 +50,19 @@ public:
 	int* SetOnClass;
 	int* SetOnList;
 	int* SetOnSet;
-	int* SetStats[4] = {SetOnPointers, SetOnClass, SetOnList, SetOnSet};
+	int* SetStats[4];
+	std::vector<std::string> names = {
+		"create",
+		"power",
+		"subsetAA",
+		"subsetBA",
+		"equilAA",
+		"equilBA",
+		"combiningAB",
+		"intersectAB",
+		"differenceAB",
+		"symmetricDifferenceAB",
+	};
 	std::string GetTime(Stats statsTime) {
 		std::string s = "";
 		for (int i = 0; i < 4; i++) {
@@ -84,7 +82,7 @@ public:
 
 	std::string GetLine() {
 		std::string str = "\n";
-		for (int _ = 0; _ < 4; _++) {
+		for (int _ = 0; _ < 5; _++) {
 			str += "+";
 			for (int i = 0; i < weightTable; i++) {
 				str += "-";
@@ -93,8 +91,8 @@ public:
 		str += "+\n";
 		return str;
 	}
-	std::string GetColumnByName(std::string name) {
-		std::string s;
+	std::string GetColumnByName(std::string name, bool end=true) {
+		std::string s = "|";
 		int amountSymbols = name.length();
 		for (int j = 0; j < (weightTable - amountSymbols) / 2; j++) {
 			s += " ";
@@ -103,21 +101,25 @@ public:
 		for (int j = 0; j < weightTable - amountSymbols - ((weightTable - amountSymbols) / 2); j++) {
 			s += " ";
 		}
-		s += "|";
+		if (end) {
+			s += "|";
+		}
 		return s;
 	}
 	std::string GetTable() {
 		std::string str;
 		str += GetLine();
-		str += "|";
-		str += GetColumnByName("list(func)");
-		str += GetColumnByName("list(class");
-		str += GetColumnByName("list(std)");
-		str += GetColumnByName("set(std)");
+		str += GetColumnByName("name", false);
+		str += GetColumnByName("list(func)", false);
+		str += GetColumnByName("list(class", false);
+		str += GetColumnByName("list(std)", false);
+		str += GetColumnByName("set(std)", false);
 		str += GetLine();
-		str += "|";
-		str += GetCreateTime();
-		str += GetLine();
+		for (int i = 0; i < 10; i++) {
+			str += GetColumnByName(names[i]);
+			str += GetTime((Stats)i);
+			str += GetLine();
+		}
 		return str;
 	}
 	void RunSetOnPointers() {
@@ -147,34 +149,51 @@ public:
 		BENCHMARK(SetOnClass[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnList() {
-		BENCHMARK(SetOnClass[Stats::create_time], lab4::Set A(N, 0, N));
+		BENCHMARK(SetOnList[Stats::create_time], lab4::Set A(N, 0, N));
 		lab4::Set B(N, 0, N);
-		BENCHMARK(SetOnClass[Stats::power_time], A.getLength());
-		BENCHMARK(SetOnClass[Stats::subsetAA_time], A.isSubSet(A));
-		BENCHMARK(SetOnClass[Stats::subsetBA_time], B.isSubSet(A));
-		BENCHMARK(SetOnClass[Stats::equilAA_time], A.equils(A));
-		BENCHMARK(SetOnClass[Stats::equilBA_time], B.equils(A));
-		BENCHMARK(SetOnClass[Stats::combining_time], A.combining(B));
-		BENCHMARK(SetOnClass[Stats::intersection_time], A.intersection(B));
-		BENCHMARK(SetOnClass[Stats::difference_time], A.difference(B));
-		BENCHMARK(SetOnClass[Stats::symmetric_difference_time], A.symmetricDifference(B));
+		BENCHMARK(SetOnList[Stats::power_time], A.getLength());
+		BENCHMARK(SetOnList[Stats::subsetAA_time], A.isSubSet(A));
+		BENCHMARK(SetOnList[Stats::subsetBA_time], B.isSubSet(A));
+		BENCHMARK(SetOnList[Stats::equilAA_time], A.equils(A));
+		BENCHMARK(SetOnList[Stats::equilBA_time], B.equils(A));
+		BENCHMARK(SetOnList[Stats::combining_time], A.combining(B));
+		BENCHMARK(SetOnList[Stats::intersection_time], A.intersection(B));
+		BENCHMARK(SetOnList[Stats::difference_time], A.difference(B));
+		BENCHMARK(SetOnList[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnSet() {
-		BENCHMARK(SetOnClass[Stats::create_time], lab5::Set A(N, 0, N));
+		BENCHMARK(SetOnSet[Stats::create_time], lab5::Set A(N, 0, N));
 		lab5::Set B(N, 0, N);
-		BENCHMARK(SetOnClass[Stats::power_time], A.getLength());
-		BENCHMARK(SetOnClass[Stats::subsetAA_time], A.isSubSet(A));
-		BENCHMARK(SetOnClass[Stats::subsetBA_time], B.isSubSet(A));
-		BENCHMARK(SetOnClass[Stats::equilAA_time], A.equils(A));
-		BENCHMARK(SetOnClass[Stats::equilBA_time], B.equils(A));
-		BENCHMARK(SetOnClass[Stats::combining_time], A.combining(B));
-		BENCHMARK(SetOnClass[Stats::intersection_time], A.intersection(B));
-		BENCHMARK(SetOnClass[Stats::difference_time], A.difference(B));
-		BENCHMARK(SetOnClass[Stats::symmetric_difference_time], A.symmetricDifference(B));
+		BENCHMARK(SetOnSet[Stats::power_time], A.getLength());
+		BENCHMARK(SetOnSet[Stats::subsetAA_time], A.isSubSet(A));
+		BENCHMARK(SetOnSet[Stats::subsetBA_time], B.isSubSet(A));
+		BENCHMARK(SetOnSet[Stats::equilAA_time], A.equils(A));
+		BENCHMARK(SetOnSet[Stats::equilBA_time], B.equils(A));
+		BENCHMARK(SetOnSet[Stats::combining_time], A.combining(B));
+		BENCHMARK(SetOnSet[Stats::intersection_time], A.intersection(B));
+		BENCHMARK(SetOnSet[Stats::difference_time], A.difference(B));
+		BENCHMARK(SetOnSet[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
-	Benchmarck(int n, int weight_table) {
+	int GetMaxLengthWord() {
+		int max = names[0].length();
+		for (int i = 0; i < names.size(); i++) {
+			if (names[i].length() > max) {
+				max = names[i].length();
+			}
+		}
+		return max;
+	}
+	Benchmarck(int n) {
 		N = n;
-		weightTable = weight_table;
+		SetOnPointers = new int[10];
+		SetOnClass = new int[10];
+		SetOnList  = new int[10];
+		SetOnSet   = new int[10];
+		SetStats[0] = SetOnPointers;
+		SetStats[1] = SetOnClass;
+		SetStats[2] = SetOnList;
+		SetStats[3] = SetOnSet;
+		weightTable = GetMaxLengthWord();
 	}
 
 };
