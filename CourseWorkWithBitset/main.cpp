@@ -1,19 +1,18 @@
-#include <bitset>
+#include "courseWork.h"
 
 using namespace std;
 
 int main() {
-	const int N = 10;
+	setlocale(0, "");
 	system("color F0");
-	bitset<N> set;
-	set.flip(1);
-	/*Benchmarck benchmarck(2000);
+	Benchmarck benchmarck(2000);
 	benchmarck.RunSetOnPointers();
 	benchmarck.RunSetOnClass();
 	benchmarck.RunSetOnList();
 	benchmarck.RunSetOnSet();
+	benchmarck.RunSetOnBitset();
 
-	cout << benchmarck.GetTable();*/
+	cout << benchmarck.GetTable();
 
 	return 0;
 }

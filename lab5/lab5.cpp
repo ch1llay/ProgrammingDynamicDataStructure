@@ -36,14 +36,7 @@ namespace lab5 {
 		return containerSet.empty();
 	}
 	bool Set::isExist(int value) {
-		if (!isEmpty()) {
-			for (int n : containerSet) {
-				if (n == value) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return containerSet.count(value) > 0;
 	}
 	void Set::add(int value) {
 		if (!isExist(value)) {

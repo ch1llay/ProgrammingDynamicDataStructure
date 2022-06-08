@@ -7,6 +7,7 @@
 #include "../lab3/lab3.h"	
 #include "../lab4/lab4.h"	
 #include "../lab5/lab5.h"	
+#include "SetOnBitset.h"	
 
 
 
@@ -50,7 +51,8 @@ public:
 	int* SetOnClass;
 	int* SetOnList;
 	int* SetOnSet;
-	int* SetStats[4];
+	int* SetOnBitset;
+	int* SetStats[5];
 	std::vector<std::string> names = {
 		"создание",
 		"мощность",
@@ -65,7 +67,7 @@ public:
 	};
 	std::string GetTime(Stats statsTime) {
 		std::string s = "";
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			int time = SetStats[i][statsTime];
 			int amountDigit = GetDigitAmount(time);
 			for (int j = 0; j < (weightTable - amountDigit) / 2; j++) {
@@ -82,7 +84,7 @@ public:
 
 	std::string GetLine() {
 		std::string str = "\n";
-		for (int _ = 0; _ < 5; _++) {
+		for (int _ = 0; _ < 6; _++) {
 			str += "+";
 			for (int i = 0; i < weightTable; i++) {
 				str += "-";
@@ -114,6 +116,7 @@ public:
 		str += GetColumnByName("list(class", false);
 		str += GetColumnByName("list(std)", false);
 		str += GetColumnByName("set(std)", false);
+		str += GetColumnByName("bitset(std)", true);
 		str += GetLine();
 		for (int i = 0; i < 10; i++) {
 			str += GetColumnByName(names[i]);
@@ -174,6 +177,19 @@ public:
 		BENCHMARK(SetOnSet[Stats::difference_time], A.difference(B));
 		BENCHMARK(SetOnSet[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
+	void RunSetOnBitset() {
+		BENCHMARK(SetOnBitset[Stats::create_time], courseWorkSetOnBitset::Set A(1000));
+		courseWorkSetOnBitset::Set B(1000);
+		BENCHMARK(SetOnBitset[Stats::power_time], A.getLength());
+		BENCHMARK(SetOnBitset[Stats::subsetAA_time], A.isSubSet(A));
+		BENCHMARK(SetOnBitset[Stats::subsetBA_time], B.isSubSet(A));
+		BENCHMARK(SetOnBitset[Stats::equilAA_time], A.equils(A));
+		BENCHMARK(SetOnBitset[Stats::equilBA_time], B.equils(A));
+		BENCHMARK(SetOnBitset[Stats::combining_time], A.combining(B));
+		BENCHMARK(SetOnBitset[Stats::intersection_time], A.intersection(B));
+		BENCHMARK(SetOnBitset[Stats::difference_time], A.difference(B));
+		BENCHMARK(SetOnBitset[Stats::symmetric_difference_time], A.symmetricDifference(B));
+	}
 	int GetMaxLengthWord() {
 		int max = names[0].length();
 		for (int i = 0; i < names.size(); i++) {
@@ -189,10 +205,12 @@ public:
 		SetOnClass = new int[10];
 		SetOnList  = new int[10];
 		SetOnSet   = new int[10];
+		SetOnBitset   = new int[10];
 		SetStats[0] = SetOnPointers;
 		SetStats[1] = SetOnClass;
 		SetStats[2] = SetOnList;
 		SetStats[3] = SetOnSet;
+		SetStats[4] = SetOnBitset;
 		weightTable = GetMaxLengthWord();
 	}
 
