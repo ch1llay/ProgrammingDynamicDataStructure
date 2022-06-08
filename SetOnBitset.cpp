@@ -2,46 +2,49 @@
 #include <string>
 
 namespace courseWorkSetOnBitset {
-	Set::Set() {
 
-
-	}
-	Set::Set(Set&& set) {
+	template<size_t N>
+	Set<N>::Set(Set&& set) {
 		containerSet = set.containerSet;
 	}
-	Set::Set(int amount) {
+	template<size_t N>
+	Set<N>::Set() {
 		int elem;
 		int min = 0;
 		int max = 1;
-		while (containerSet.size() < amount) {
+		while (containerSet.size() < N) {
 			elem = min + rand() % (max - min);
 			add(elem);
 		}
 
 	}
-
-	Set::~Set() {
+	template<size_t N>
+	Set<N>::~Set<N>() {
 		containerSet.reset();
 	}
-
-	bool Set::isEmpty() {
+	template<size_t N>
+	bool Set<N>::isEmpty() {
 		return containerSet.none();
 	}
-	bool Set::isExist(int value) {
+	template<size_t N>
+	bool Set<N>::isExist(int value) {
 		if (!isEmpty()) {
 			return containerSet[value] == 1;
 		}
 		return false;
 	}
-	void Set::add(int value) {
+	template<size_t N>
+	void Set<N>::add(int value) {
 		if (!isExist(value)) {
 			containerSet[value] = 1;
 		}
 	}
-	int Set::getLength() {
+	template<size_t N>
+	int Set<N>::getLength() {
 		return containerSet.size();
 	}
-	std::string Set::toString(char separate) {
+	template<size_t N>
+	std::string Set<N>::toString(char separate) {
 		std::string s = "";
 		if (!isEmpty()) {
 			for (int i = 0; i < N; i++) {
@@ -53,7 +56,8 @@ namespace courseWorkSetOnBitset {
 		return s;
 	}
 
-	bool Set::isSubSet(Set& set) {
+	template<size_t N>
+	bool Set<N>::isSubSet(Set& set) {
 		if (isEmpty()) {
 			return true;
 		}
@@ -69,16 +73,19 @@ namespace courseWorkSetOnBitset {
 		}
 		return true;
 	}
-	Set Set::copy() {
+	template<size_t N>
+	Set<N> Set<N>::copy() {
 		Set newSet;
 		newSet.containerSet = containerSet;
 		return newSet;
 	}
-	bool Set::equils(Set& set) {
+	template<size_t N>
+	bool Set<N>::equils(Set& set) {
 		return isSubSet(set) && set.isSubSet(*this);
 	}
-	Set Set::combining(Set& set) {
-		Set newSet;
+	template<size_t N>
+	Set<N> Set<N>::combining(Set& set) {
+		Set<N> newSet;
 
 		if (isEmpty() && set.isEmpty()) {
 			return newSet;
@@ -103,7 +110,8 @@ namespace courseWorkSetOnBitset {
 
 	}
 
-	Set Set::intersection(Set& set) {
+	template<size_t N>
+	Set<N> Set<N>::intersection(Set<N>& set) {
 		Set newSet;
 
 		if (isEmpty() || set.isEmpty()) {
@@ -120,7 +128,8 @@ namespace courseWorkSetOnBitset {
 			return newSet;
 		}
 	}
-	Set Set::difference(Set& set) {
+	template<size_t N>
+	Set<N> Set<N>::difference(Set& set) {
 		Set newSet;
 		if (isEmpty()) {
 			return newSet;
@@ -139,13 +148,15 @@ namespace courseWorkSetOnBitset {
 			return newSet;
 		};
 	}
-	Set Set::symmetricDifference(Set& set) {
+	template<size_t N>
+	Set<N> Set<N>::symmetricDifference(Set& set) {
 		Set combiningSet = combining(set);
 		Set intersectionSet = intersection(set);
 		Set newNode = combiningSet.difference(intersectionSet);
 		return newNode;
 	}
-	void Set::clear() {
+	template<size_t N>
+	void Set<N>::clear() {
 		containerSet.reset();
 	}
 }

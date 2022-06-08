@@ -39,10 +39,10 @@ enum Stats {
 	symmetric_difference_time
 };
 
+template <size_t N>
 class Benchmarck {
 
 public:
-	int N;
 	int weightTable;
 	int GetDigitAmount(int n) {
 		return floor(log10(n) + 1);
@@ -178,8 +178,8 @@ public:
 		BENCHMARK(SetOnSet[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnBitset() {
-		BENCHMARK(SetOnBitset[Stats::create_time], courseWorkSetOnBitset::Set A(1000));
-		courseWorkSetOnBitset::Set B(1000);
+		BENCHMARK(SetOnBitset[Stats::create_time], courseWorkSetOnBitset::Set<N> A);
+		courseWorkSetOnBitset::Set<N> B;
 		BENCHMARK(SetOnBitset[Stats::power_time], A.getLength());
 		BENCHMARK(SetOnBitset[Stats::subsetAA_time], A.isSubSet(A));
 		BENCHMARK(SetOnBitset[Stats::subsetBA_time], B.isSubSet(A));
@@ -199,8 +199,7 @@ public:
 		}
 		return max;
 	}
-	Benchmarck(int n) {
-		N = n;
+	Benchmarck() {
 		SetOnPointers = new int[10];
 		SetOnClass = new int[10];
 		SetOnList  = new int[10];
