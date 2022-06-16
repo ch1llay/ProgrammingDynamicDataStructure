@@ -4,8 +4,8 @@ using namespace std;
 
 int main() {
 	setlocale(0, "");
-	system("color F0");
-	const int N = 1000;
+	// system("color F0");
+	const int N = 299;
 
 	Benchmarck<N> benchmarck;
 	benchmarck.RunSetOnPointers();
