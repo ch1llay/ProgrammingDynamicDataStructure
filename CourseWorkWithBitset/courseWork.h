@@ -3,10 +3,10 @@
 #include <random>
 #include <iostream>
 
-#include "../lab2/lab2.h"
-#include "../lab3/lab3.h"	
-#include "../lab4/lab4.h"	
-#include "../lab5/lab5.h"	
+#include "SetOnLinkedListOnPointers/SetOnLinkedListOnPointers.h"
+#include "SetOnLinkedListOnClass/SetOnLinkedListOnClass.h"
+#include "SetOnListStd/SetOnListStd.h"
+#include "SetOnSetStd/SetOnSetStd.h"
 #include "SetOnBitset.h"	
 
 
@@ -93,7 +93,7 @@ public:
 		str += "+\n";
 		return str;
 	}
-	std::string GetColumnByName(std::string name, bool end=true) {
+	std::string GetColumnByName(std::string name, bool end = true) {
 		std::string s = "|";
 		int amountSymbols = name.length();
 		for (int j = 0; j < (weightTable - amountSymbols) / 2; j++) {
@@ -126,34 +126,34 @@ public:
 		return str;
 	}
 	void RunSetOnPointers() {
-		BENCHMARK(SetOnPointers[Stats::create_time], lab2::Node * A = lab2::createSet(N, 0, N));
-		lab2::Node* B = lab2::createSet(N, 0, N);
-		BENCHMARK(SetOnPointers[Stats::power_time],					 lab2::getLength(A));
-		BENCHMARK(SetOnPointers[Stats::subsetAA_time],				 lab2::isSubSet(A, A));
-		BENCHMARK(SetOnPointers[Stats::subsetBA_time],				 lab2::isSubSet(B, A));
-		BENCHMARK(SetOnPointers[Stats::equilAA_time],				 lab2::equils(A, A));
-		BENCHMARK(SetOnPointers[Stats::equilBA_time],				 lab2::equils(B, A));
-		BENCHMARK(SetOnPointers[Stats::combining_time],				 lab2::combining(A, B));
-		BENCHMARK(SetOnPointers[Stats::intersection_time]			,lab2::intersection(A, B));
-		BENCHMARK(SetOnPointers[Stats::difference_time],			 lab2::difference(A, B));
-		BENCHMARK(SetOnPointers[Stats::symmetric_difference_time], lab2::symmetricDifference(A, B));
+		BENCHMARK(SetOnPointers[Stats::create_time], SetOnLinkedListOnPointers::Node * A = SetOnLinkedListOnPointers::createSet(N, 0, N));
+		SetOnLinkedListOnPointers::Node* B = SetOnLinkedListOnPointers::createSet(N, 0, N);
+		BENCHMARK(SetOnPointers[Stats::power_time], SetOnLinkedListOnPointers::getLength(A));
+		BENCHMARK(SetOnPointers[Stats::subsetAA_time], SetOnLinkedListOnPointers::isSubSet(A, A));
+		BENCHMARK(SetOnPointers[Stats::subsetBA_time], SetOnLinkedListOnPointers::isSubSet(B, A));
+		BENCHMARK(SetOnPointers[Stats::equilAA_time], SetOnLinkedListOnPointers::equils(A, A));
+		BENCHMARK(SetOnPointers[Stats::equilBA_time], SetOnLinkedListOnPointers::equils(B, A));
+		BENCHMARK(SetOnPointers[Stats::combining_time], SetOnLinkedListOnPointers::combining(A, B));
+		BENCHMARK(SetOnPointers[Stats::intersection_time], SetOnLinkedListOnPointers::intersection(A, B));
+		BENCHMARK(SetOnPointers[Stats::difference_time], SetOnLinkedListOnPointers::difference(A, B));
+		BENCHMARK(SetOnPointers[Stats::symmetric_difference_time], SetOnLinkedListOnPointers::symmetricDifference(A, B));
 	}
 	void RunSetOnClass() {
-		BENCHMARK(SetOnClass[Stats::create_time], lab3::Set A(N, 0, N));
-		lab3::Set B(N, 0, N);
+		BENCHMARK(SetOnClass[Stats::create_time], SetOnLinkedListOnClass::Set A(N, 0, N));
+		SetOnLinkedListOnClass::Set B(N, 0, N);
 		BENCHMARK(SetOnClass[Stats::power_time], A.getLength());
 		BENCHMARK(SetOnClass[Stats::subsetAA_time], A.isSubSet(A));
 		BENCHMARK(SetOnClass[Stats::subsetBA_time], B.isSubSet(A));
 		BENCHMARK(SetOnClass[Stats::equilAA_time], A.equils(A));
 		BENCHMARK(SetOnClass[Stats::equilBA_time], B.equils(A));
 		BENCHMARK(SetOnClass[Stats::combining_time], A.combining(B));
-		BENCHMARK(SetOnClass[Stats::intersection_time],			A.intersection(B));
+		BENCHMARK(SetOnClass[Stats::intersection_time], A.intersection(B));
 		BENCHMARK(SetOnClass[Stats::difference_time], A.difference(B));
 		BENCHMARK(SetOnClass[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnList() {
-		BENCHMARK(SetOnList[Stats::create_time], lab4::Set A(N, 0, N));
-		lab4::Set B(N, 0, N);
+		BENCHMARK(SetOnList[Stats::create_time], SetOnListStd::Set A(N, 0, N));
+		SetOnListStd::Set B(N, 0, N);
 		BENCHMARK(SetOnList[Stats::power_time], A.getLength());
 		BENCHMARK(SetOnList[Stats::subsetAA_time], A.isSubSet(A));
 		BENCHMARK(SetOnList[Stats::subsetBA_time], B.isSubSet(A));
@@ -165,8 +165,8 @@ public:
 		BENCHMARK(SetOnList[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnSet() {
-		BENCHMARK(SetOnSet[Stats::create_time], lab5::Set A(N, 0, N));
-		lab5::Set B(N, 0, N);
+		BENCHMARK(SetOnSet[Stats::create_time], SetOnSetStd::Set A(N, 0, N));
+		SetOnSetStd::Set B(N, 0, N);
 		BENCHMARK(SetOnSet[Stats::power_time], A.getLength());
 		BENCHMARK(SetOnSet[Stats::subsetAA_time], A.isSubSet(A));
 		BENCHMARK(SetOnSet[Stats::subsetBA_time], B.isSubSet(A));
@@ -178,8 +178,8 @@ public:
 		BENCHMARK(SetOnSet[Stats::symmetric_difference_time], A.symmetricDifference(B));
 	}
 	void RunSetOnBitset() {
-		BENCHMARK(SetOnBitset[Stats::create_time], courseWorkSetOnBitset::Set<N> A);
-		courseWorkSetOnBitset::Set<N> B;
+		BENCHMARK(SetOnBitset[Stats::create_time], SetOnBitsetStd::Set<N> A);
+		SetOnBitsetStd::Set<N> B;
 		BENCHMARK(SetOnBitset[Stats::power_time], A.getLength());
 		BENCHMARK(SetOnBitset[Stats::subsetAA_time], A.isSubSet(A));
 		BENCHMARK(SetOnBitset[Stats::subsetBA_time], B.isSubSet(A));
@@ -202,9 +202,9 @@ public:
 	Benchmarck() {
 		SetOnPointers = new int[10];
 		SetOnClass = new int[10];
-		SetOnList  = new int[10];
-		SetOnSet   = new int[10];
-		SetOnBitset   = new int[10];
+		SetOnList = new int[10];
+		SetOnSet = new int[10];
+		SetOnBitset = new int[10];
 		SetStats[0] = SetOnPointers;
 		SetStats[1] = SetOnClass;
 		SetStats[2] = SetOnList;

@@ -13,5 +13,14 @@ add_executable (lab4 "lab4/lab4.cpp" "lab4/lab4.h" "lab4/main.cpp")
 add_executable (lab5 "lab5/lab5.cpp" "lab5/lab5.h" "lab5/main.cpp")
 add_executable (lab6 "lab2/lab2.cpp" "lab2/lab2.h" "lab3/lab3.cpp" "lab3/lab3.h" "lab4/lab4.cpp" "lab4/lab4.h" "lab5/lab5.cpp" "lab5/lab5.h"  "lab6/lab6.cpp" "lab6/lab6.h" "lab6/main.cpp")
 add_executable (lab7 "lab7/lab7.cpp" "lab7/lab7.h" "lab7/main.cpp")
-add_executable (CourseWorkWithBitset "lab2/lab2.cpp" "lab2/lab2.h" "lab3/lab3.cpp" "lab3/lab3.h" "lab4/lab4.cpp" "lab4/lab4.h" "lab5/lab5.cpp" "lab5/lab5.h" "CourseWorkWithBitset/main.cpp" "CourseWorkWithBitset/SetOnBitset.h"  "CourseWorkWithBitset/courseWork.h" "CourseWorkWithBitset/courseWork.cpp")
+add_executable (
+	CourseWork
+	"CourseWorkWithBitset/SetOnLinkedListOnPointers/SetOnLinkedListOnPointers.h" "CourseWorkWithBitset/SetOnLinkedListOnPointers/SetOnLinkedListOnPointers.cpp"
+	"CourseWorkWithBitset/SetOnLinkedListOnClass/SetOnLinkedListOnClass.h" "CourseWorkWithBitset/SetOnLinkedListOnClass/SetOnLinkedListOnClass.cpp"
+	"CourseWorkWithBitset/SetOnListStd/SetOnListStd.h" "CourseWorkWithBitset/SetOnListStd/SetOnListStd.cpp"
+	"CourseWorkWithBitset/SetOnSetStd/SetOnSetStd.h" "CourseWorkWithBitset/SetOnSetStd/SetOnSetStd.cpp"
+	"CourseWorkWithBitset/SetOnBitset.h"
+	"CourseWorkWithBitset/courseWork.h" "CourseWorkWithBitset/courseWork.cpp"
+
+)
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.

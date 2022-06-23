@@ -3,7 +3,7 @@
 #include <string>
 
 
-namespace courseWorkSetOnBitset {
+namespace SetOnBitsetStd {
 	template<size_t N>
 	class Set {
 
